@@ -37,7 +37,7 @@ def posterior(x, n, p1, p2):
 
     # Check if p1 and p2 are floats within [0, 1]
     if not (0 <= p1 <= 1) or not (0 <= p2 <= 1):
-        raise ValueError("p1 and p2 must be floats in the range [0, 1]")
+        raise ValueError("p1 must be a float in the range [0, 1] and p2 must be a float in the range [0, 1]")
 
     # Check if p2 > p1
     if p2 <= p1:
