@@ -2,17 +2,20 @@
 import pandas as pd
 
 def from_file(filename, delimiter):
-    """_summary_
+    """Loads data from a file as a pd.DataFrame.
 
     Args:
-        filename (_type_): _description_
-        delimer (_type_): _description_
-    """
-#Load dta into DataFrame
-df= pd.read_csv(filename, delimiter=delimiter)
-return df
+        filename: The file to load from.
+        delimiter: The column separator.
 
-#Testing script
+    Returns:
+        pd.DataFrame: The loaded DataFrame.
+    """
+    # Load the data into a DataFrame
+    df = pd.read_csv(filename, delimiter=delimiter)
+    return df
+
+# This is for testing the script directly
 if __name__ == "__main__":
     df1 = from_file('coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv', ',')
     print(df1.head())
