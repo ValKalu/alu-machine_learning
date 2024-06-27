@@ -17,13 +17,11 @@ def sentientPlanets():
     """
     url = 'https://swapi.dev/api/species/'
     planets = []
+    planets_not_found = []
 
     while url:
         response = requests.get(url)
         data = response.json()
-
-        if 'results' not in data:
-            break
 
         for species in data['results']:
             if species.get('designation') == 'sentient' and species.get('homeworld'):
@@ -32,16 +30,18 @@ def sentientPlanets():
                     homeworld_data = homeworld_response.json()
                     planets.append(homeworld_data['name'])
                 else:
-                    print("Error fetching homeworld for species: {}".format(species['name']))
+                    planets_not_found.append(species['name'])
             elif species.get('designation') == 'sentient' and not species.get('homeworld'):
-                planets.append(species['name'])
+                planets_not_found.append(species['name'])
 
         url = data.get('next')
 
-    return planets
+    return planets, planets_not_found
 
 
 if __name__ == '__main__':
-    planets = sentientPlanets()
+    planets, planets_not_found = sentientPlanets()
+    if planets_not_found:
+        print(f"Planets not found: {planets_not_found}")
     for planet in planets:
         print(planet)
