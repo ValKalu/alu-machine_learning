@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
 """
-This module provides a function to fetch available starships that can hold a given number of passengers from the Swapi API.
+This module provides a function to fetch available starships that can hold a 
+given number of passengers from the Swapi API.
 """
 
 import requests
 
+
 def availableShips(passengerCount):
     """
-    Fetches a list of ships that can hold a given number of passengers from the Swapi API.
+    Fetches a list of ships that can hold a given number of passengers from 
+    the Swapi API.
 
     Args:
-        passengerCount (int): The minimum number of passengers the ships should be able to hold.
+        passengerCount (int): The minimum number of passengers the ships 
+        should be able to hold.
 
     Returns:
-        list: A list of ship names that can hold the given number of passengers.
+        list: A list of ship names that can hold the given number of 
+        passengers.
     """
     url = 'https://swapi.dev/api/starships/'
     ships = []
@@ -30,8 +35,9 @@ def availableShips(passengerCount):
                 except ValueError:
                     pass
         url = data['next']
-    
+
     return ships
+
 
 if __name__ == '__main__':
     import sys
