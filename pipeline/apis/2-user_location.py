@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-This script fetches and prints the location of a specific GitHub user using the GitHub API.
+This script fetches and prints the location of a specific GitHub user 
+using the GitHub API.
 """
 
 import requests
@@ -16,7 +17,8 @@ def get_user_location(url):
         url (str): The full API URL of the user.
 
     Returns:
-        str: The location of the user or an appropriate message if not found or rate limited.
+        str: The location of the user or an appropriate message if not 
+        found or rate limited.
     """
     response = requests.get(url)
     
