@@ -22,9 +22,13 @@ def availableShips(passengerCount):
         response = requests.get(url)
         data = response.json()
         for ship in data['results']:
-            if (ship['passengers'] != 'n/a' and 
-                    int(ship['passengers'].replace(',', '')) >= passengerCount):
-                ships.append(ship['name'])
+            if ship['passengers'] != 'n/a':
+                try:
+                    passengers = int(ship['passengers'].replace(',', ''))
+                    if passengers >= passengerCount:
+                        ships.append(ship['name'])
+                except ValueError:
+                    pass
         url = data['next']
     
     return ships
