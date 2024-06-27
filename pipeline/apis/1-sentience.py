@@ -17,6 +17,7 @@ def sentientPlanets():
     """
     url = 'https://swapi.dev/api/species/'
     planets = []
+    planets_not_found = []
 
     while url:
         response = requests.get(url)
@@ -32,23 +33,19 @@ def sentientPlanets():
                     homeworld_data = homeworld_response.json()
                     planets.append(homeworld_data['name'])
                 else:
-                    planets.append('unknown')
-                    print("Error fetching homeworld for species: {}".format(species['name']))
-                    print("Response status code: {}".format(homeworld_response.status_code))
-                    print("Response content: {}".format(homeworld_response.content))
+                    planets_not_found.append(species['name'])
             else:
-                planets.append('unknown')
+                planets_not_found.append(species['name'])
 
         url = data.get('next')
 
+    if planets_not_found:
+        print("Planets not found: {}".format(planets_not_found))
+    
     return planets
 
 
 if __name__ == '__main__':
     planets = sentientPlanets()
-    planets_not_found = [planet for planet in planets if planet == 'unknown']
-    if planets_not_found:
-        print("Planets not found: {}".format(planets_not_found))
     for planet in planets:
-        if planet != 'unknown':
-            print(planet)
+        print(planet)
