@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-This module provides a function to fetch the names of the home planets of all 
+This module provides a function to fetch the names of the home planets of all
 sentient species from the Swapi API.
 """
 
@@ -9,7 +9,7 @@ import requests
 
 def sentientPlanets():
     """
-    Fetches the names of the home planets of all sentient species from the 
+    Fetches the names of the home planets of all sentient species from the
     Swapi API.
 
     Returns:
