@@ -48,7 +48,7 @@ if __name__ == '__main__':
     planets = sentientPlanets()
     planets_not_found = [planet for planet in planets if planet == 'unknown']
     if planets_not_found:
-        print(f"Planets not found: {planets_not_found}")
+        print("Planets not found: {}".format(planets_not_found))
     for planet in planets:
         if planet != 'unknown':
             print(planet)
