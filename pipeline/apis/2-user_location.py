@@ -25,7 +25,7 @@ def get_user_location(url):
     elif response.status_code == 403:
         reset_time = int(response.headers.get('X-RateLimit-Reset', time.time()))
         wait_time = reset_time - int(time.time())
-        return f"Reset in {wait_time // 60} min"
+        return "Reset in {} min".format(wait_time // 60)
     elif response.status_code == 200:
         data = response.json()
         return data.get('location', 'Location not available')
