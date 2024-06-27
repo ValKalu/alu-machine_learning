@@ -4,7 +4,8 @@ This module provides a function to fetch available starships that can hold a giv
 """
 
 import requests
-def availableShips(passangerCOunt):
+
+def availableShips(passengerCount):
     """
     Fetches a list of ships that can hold a given number of passengers from the Swapi API.
 
@@ -16,14 +17,21 @@ def availableShips(passangerCOunt):
     """
     url = 'https://swapi.dev/api/starships/'
     ships = []
-    
+
     while url:
         response = requests.get(url)
-        data =response.json()
+        data = response.json()
         for ship in data['results']:
-            if ship['passangers'] != 'n/a' and int(ship['passagners'].replace(',', '')) >= passengerCount:
+            if (ship['passengers'] != 'n/a' and 
+                    int(ship['passengers'].replace(',', '')) >= passengerCount):
                 ships.append(ship['name'])
-                url = data['next']
-                
-                return ships
-                
+        url = data['next']
+    
+    return ships
+
+if __name__ == '__main__':
+    import sys
+    passengerCount = int(sys.argv[1])
+    ships = availableShips(passengerCount)
+    for ship in ships:
+        print(ship)
