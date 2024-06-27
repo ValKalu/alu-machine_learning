@@ -33,10 +33,8 @@ def sentientPlanets():
                     planets.append(homeworld_data['name'])
                 else:
                     print("Error fetching homeworld for species: {}".format(species['name']))
-                    print("Response status code: {}".format(homeworld_response.status_code))
-                    print("Response content: {}".format(homeworld_response.content))
             elif species.get('designation') == 'sentient' and not species.get('homeworld'):
-                planets.append('unknown')
+                planets.append(species['name'])
 
         url = data.get('next')
 
