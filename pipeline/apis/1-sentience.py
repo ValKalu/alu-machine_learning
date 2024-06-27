@@ -21,20 +21,34 @@ def sentientPlanets():
     while url:
         response = requests.get(url)
         data = response.json()
+
+        if 'results' not in data:
+            break
+
         for species in data['results']:
-            if species['designation'] == 'sentient' and species['homeworld']:
+            if species.get('designation') == 'sentient' and species.get('homeworld'):
                 homeworld_response = requests.get(species['homeworld'])
                 if homeworld_response.status_code == 200:
                     homeworld_data = homeworld_response.json()
                     planets.append(homeworld_data['name'])
                 else:
                     planets.append('unknown')
-        url = data['next']
+                    print("Error fetching homeworld for species: {}".format(species['name']))
+                    print("Response status code: {}".format(homeworld_response.status_code))
+                    print("Response content: {}".format(homeworld_response.content))
+            else:
+                planets.append('unknown')
+
+        url = data.get('next')
 
     return planets
 
 
 if __name__ == '__main__':
     planets = sentientPlanets()
+    planets_not_found = [planet for planet in planets if planet == 'unknown']
+    if planets_not_found:
+        print(f"Planets not found: {planets_not_found}")
     for planet in planets:
-        print(planet)
+        if planet != 'unknown':
+            print(planet)
