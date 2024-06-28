@@ -32,6 +32,7 @@ def fetch_upcoming_launch():
     rocket_name = upcoming_launch['rocket']
     launchpad_name = upcoming_launch['launchpad']
 
+    # Corrected line to use double quotes for the outer string
     launch_details = f"{launch_name} ({launch_date_local}) {rocket_name} - {launchpad_name['name']} ({launchpad_name['locality']})"
     return launch_details
 
