@@ -36,9 +36,8 @@ def upcoming_launch():
     date_local = date_utc.strftime('%Y-%m-%dT%H:%M:%S')
 
     # Format output with line breaks for readability
-    output = (
-        "{} ({}) {} - {} ({})"
-        .format(launch_name, date_local, rocket_name, launchpad_name, launchpad_locality)
+    output = "{} ({}) {} - {} ({})".format(
+        launch_name, date_local, rocket_name, launchpad_name, launchpad_locality
     )
     return output
 
