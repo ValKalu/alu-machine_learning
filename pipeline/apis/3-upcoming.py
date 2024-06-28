@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
+"""
+Script to fetch and display information about the upcoming SpaceX launch.
+"""
+
 import requests
 from datetime import datetime
 
 def upcoming_launch():
+    """
+    Fetches upcoming SpaceX launch information from the API.
+
+    Returns:
+        str: Formatted string containing launch information.
+    """
     url = "https://api.spacexdata.com/v4/launches/upcoming"
     response = requests.get(url)
     launches = response.json()
@@ -24,7 +34,7 @@ def upcoming_launch():
     date_utc = datetime.fromisoformat(utc_date[:-1])  # Remove last 'Z' character
     date_local = date_utc.strftime('%Y-%m-%dT%H:%M:%S')
     
-    # Format output using str.format() for Python 3.5 compatibility
+    # Format output
     output = "{} ({}) {} - {} ({})".format(launch_name, date_local, rocket_name, launchpad_name, launchpad_locality)
     return output
 
