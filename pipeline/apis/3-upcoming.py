@@ -24,8 +24,8 @@ def upcoming_launch():
     date_utc = datetime.fromisoformat(utc_date[:-1])  # Remove last 'Z' character
     date_local = date_utc.strftime('%Y-%m-%dT%H:%M:%S')
     
-    # Format output
-    output = f"{launch_name} ({date_local}) {rocket_name} - {launchpad_name} ({launchpad_locality})"
+    # Format output using str.format() for Python 3.5 compatibility
+    output = "{} ({}) {} - {} ({})".format(launch_name, date_local, rocket_name, launchpad_name, launchpad_locality)
     return output
 
 if __name__ == '__main__':
