@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
 """
 This script fetches and prints the location of a specific GitHub user
-using the GitHub API.
 """
 
+
 import requests
-import sys
 import time
+import datetime import datetime
 
 
-def get_user_location(url):
+def main(url):
     """
     Fetches the location of a specific GitHub user.
 
     Args:
         url (str): The full API URL of the user.
+
+
 
     Returns:
         str: The location of the user or an appropriate message if not
@@ -23,22 +25,17 @@ def get_user_location(url):
     response = requests.get(url)
 
     if response.status_code == 404:
-        return "Not found"
+        print("Not found")
     elif response.status_code == 403:
-        reset_time = int(response.headers.get('X-RateLimit-Reset', time.time()))
-        wait_time = reset_time - int(time.time())
-        return "Reset in {} min".format(wait_time // 60)
-    elif response.status_code == 200:
-        data = response.json()
-        return data.get('location', 'Location not available')
+        reset_timestamp = int(response.headers["X-RateLimit-Reset"])
+        current_timestamp = int(time.time())
+        reset_in_minutes = (reset_timestamp - current_timestamp) // 60
+        print("Reset in {} min".format(reset_in_minutes))
     else:
-        return "Error occurred"
-
-
-if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Usage: ./2-user_location.py <GitHub API URL>")
-        sys.exit(1)
-    user_url = sys.argv[1]
-    location = get_user_location(user_url)
-    print(location)
+        print(response.json()["location"])
+        
+        
+        if __name__ == "__main__":
+            import sys
+            
+            main(sys.argv[1])
