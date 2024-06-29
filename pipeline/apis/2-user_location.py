@@ -11,7 +11,7 @@ from datetime import datetime
 
 def main(url):
     """
-    - The user is passed as first argument of the script
+    - User is passed as first argument of the script
     with the full API URL, example: ./2-user_location.py
     https://api.github.com/users/holbertonschool
     - If the user doesn’t exist, print Not found
