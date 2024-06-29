@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 """
-This module provides a function to fetch the names of the home planets of all
-sentient species from the Swapi API.
+    Return the list of names of the home
+    planets of all sentient species.
 """
+
 
 import requests
 
 
-
 def sentientPlanets():
     """
-    Fetches the names of the home planets of all sentient species from the
-    Swapi API.
-
-    Returns:
-        list: A list of names of home planets of all sentient species.
+    Return the list of names of the home
+    planets of all sentient species.
     """
     url = "https://swapi-api.alx-tools.com/api/species/"
     sentient_planets = []
