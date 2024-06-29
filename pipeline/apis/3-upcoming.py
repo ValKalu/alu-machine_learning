@@ -1,48 +1,64 @@
 #!/usr/bin/env python3
 """
-Script to fetch and display information about the upcoming SpaceX launch.
+    script that displays the upcoming launch
 """
 
+
 import requests
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 
-def upcoming_launch():
+def get_upcoming_launch():
     """
-    Fetches upcoming SpaceX launch information from the API.
-
-    Returns:
-        str: Formatted string containing launch information.
+    Displays the upcoming launch
     """
     url = "https://api.spacexdata.com/v4/launches/upcoming"
     response = requests.get(url)
     launches = response.json()
 
-    if not launches:
-        return None
+    # Sort launches by date_unix to find the soonest launch
+    launches.sort(key=lambda x: x["date_unix"])
+    upcoming_launch = launches[0]
 
-    # Sort launches by date_unix and select the soonest one
-    upcoming_launch = min(launches, key=lambda launch: launch['date_unix'])
+    launch_name = upcoming_launch["name"]
+    date_unix = upcoming_launch["date_unix"]
+    rocket_id = upcoming_launch["rocket"]
+    launchpad_id = upcoming_launch["launchpad"]
 
-    # Extract relevant information
-    launch_name = upcoming_launch['name']
-    utc_date = upcoming_launch['date_utc']
-    rocket_name = upcoming_launch['rocket']['name']
-    launchpad_name = upcoming_launch['launchpad']['name']
-    launchpad_locality = upcoming_launch['launchpad']['locality']
-
-    # Convert UTC date to local time
-    date_utc = datetime.fromisoformat(utc_date[:-1])  # Remove last 'Z' character
-    date_local = date_utc.strftime('%Y-%m-%dT%H:%M:%S')
-
-    # Format output with line breaks for readability
-    output = "{} ({}) {} - {} ({})".format(
-        launch_name, date_local, rocket_name, launchpad_name, launchpad_locality
+    # Convert the date to the desired local time (UTC-4)
+    launch_date_utc = datetime.fromtimestamp(date_unix, tz=timezone.utc)
+    launch_date_local = launch_date_utc.astimezone(timezone(
+        timedelta(hours=-4))
     )
-    return output
+    launch_date_str = launch_date_local.strftime('%Y-%m-%dT%H:%M:%S%z')
+    launch_date_str = "{}:{}".format(
+        launch_date_str[:-2], launch_date_str[-2:]
+    )
+
+    # Get rocket name
+    rocket_url = "https://api.spacexdata.com/v4/rockets/{}".format(rocket_id)
+    rocket_response = requests.get(rocket_url)
+    rocket_name = rocket_response.json()["name"]
+
+    # Get launchpad details
+    launchpad_url = "https://api.spacexdata.com/v4/launchpads/{}".format(
+        launchpad_id
+    )
+    launchpad_response = requests.get(launchpad_url)
+    launchpad_data = launchpad_response.json()
+    launchpad_name = launchpad_data["name"]
+    launchpad_locality = launchpad_data["locality"]
+
+    # Format the output
+    formatted_output = "{} ({}) {} - {} ({})".format(
+        launch_name,
+        launch_date_str,
+        rocket_name,
+        launchpad_name,
+        launchpad_locality,
+    )
+    return formatted_output
 
 
-if __name__ == '__main__':
-    upcoming_info = upcoming_launch()
-    if upcoming_info:
-        print(upcoming_info)
+if __name__ == "__main__":
+    print(get_upcoming_launch())
