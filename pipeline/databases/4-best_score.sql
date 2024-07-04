@@ -1,4 +1,5 @@
--- List specific records with scores and names
+-- List all records with scores from>= 10 in second_table
 SELECT score, name
-FROM your_table_name
-WHERE score IN (89, 23, 12);
+FROM second_table
+WHERE score>= 10
+ORDER BY score desc;
