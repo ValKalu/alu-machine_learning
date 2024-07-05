@@ -1,11 +1,5 @@
--- Create table and insert data to second_table
-CREATE TABLE IF NOT EXISTS second_table (
-    id INT,
-    name VARCHAR(256),
-    score INT
-);
-
-INSERT INTO second_table (id, name, score) VALUES (1, 'Bob', 14);
-INSERT INTO second_table (id, name, score) VALUES (2, 'Roy', 3);
-INSERT INTO second_table (id, name, score) VALUES (3, 'John', 10);
-INSERT INTO second_table (id, name, score) VALUES (4, 'Bryan', 8);
+---A Script that displays max tempreature of each state
+SELECT state, max(temperature) as max_temp
+FROM temperatures
+GROUP BY state
+ORDER BY state;
