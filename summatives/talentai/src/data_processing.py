@@ -1,26 +1,31 @@
 import pandas as pd
-import os
 
-# Define file paths
-base_path = '/home/kalu/alu-machine_learning/summatives/talentai'
-artists_path = os.path.join(base_path, 'data/train/artists.csv')
-tracks_path = os.path.join(base_path, 'data/train/tracks.csv')
-engagement_path = os.path.join(base_path, 'data/train/engagement.csv')
-revenue_path = os.path.join(base_path, 'data/train/revenue.csv')
-output_path = os.path.join(base_path, 'data/train/training_data.csv')
+# Define paths
+artists_path = '/home/kalu/alu-machine_learning/summatives/talentai/data/train/artists.csv'
+tracks_path = '/home/kalu/alu-machine_learning/summatives/talentai/data/train/tracks.csv'
+engagement_path = '/home/kalu/alu-machine_learning/summatives/talentai/data/train/engagement.csv'
+revenue_path = '/home/kalu/alu-machine_learning/summatives/talentai/data/train/revenue.csv'
 
-# Load data
-artists_df = pd.read_csv(artists_path)
-tracks_df = pd.read_csv(tracks_path)
-engagement_df = pd.read_csv(engagement_path)
-revenue_df = pd.read_csv(revenue_path)
+# Load data into DataFrames
+try:
+    artists_df = pd.read_csv(artists_path)
+    tracks_df = pd.read_csv(tracks_path)
+    engagement_df = pd.read_csv(engagement_path)
+    revenue_df = pd.read_csv(revenue_path)
 
-# Merge data
-merged_df = pd.merge(tracks_df, artists_df, on='artist_id')
-merged_df = pd.merge(merged_df, engagement_df, on='track_id')
-merged_df = pd.merge(merged_df, revenue_df, on='track_id')
+    # Display first few rows to verify
+    print("Artists:")
+    print(artists_df.head())
+    print("\nTracks:")
+    print(tracks_df.head())
+    print("\nEngagement:")
+    print(engagement_df.head())
+    print("\nRevenue:")
+    print(revenue_df.head())
 
-# Save merged data to CSV
-merged_df.to_csv(output_path, index=False)
-
-print(f"Data successfully saved to {output_path}")
+except pd.errors.EmptyDataError:
+    print("One of the files is empty or contains no data.")
+except pd.errors.ParserError:
+    print("Error parsing data. Check the file's format.")
+except FileNotFoundError as e:
+    print(f"File not found: {e}")

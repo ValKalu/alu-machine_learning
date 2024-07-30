@@ -22,3 +22,27 @@ print("Model Accuracy:", accuracy_score(y_test, predictions))
 
 # Save the model
 pickle.dump(model, open('../models/talent_success_model.pkl', 'wb'))
+import pandas as pd
+import pickle
+
+# Load processed data
+data_path = '/home/kalu/alu-machine_learning/summatives/talentai/data/train/'
+artists_df = pd.read_csv(data_path + 'artists.csv')
+tracks_df = pd.read_csv(data_path + 'tracks.csv')
+engagement_df = pd.read_csv(data_path + 'engagement.csv')
+revenue_df = pd.read_csv(data_path + 'revenue.csv')
+
+# Placeholder: example processing
+# Example: merging data (if needed)
+merged_df = pd.merge(tracks_df, artists_df, on='artist_id')
+merged_df = pd.merge(merged_df, engagement_df, on='track_id')
+merged_df = pd.merge(merged_df, revenue_df, on='track_id')
+
+# Example: saving a processed file
+processed_data_path = '/home/kalu/alu-machine_learning/summatives/talentai/data/processed/processed_data.csv'
+merged_df.to_csv(processed_data_path, index=False)
+
+# Example: training model or analysis
+# Here you can add any model training or data analysis code
+
+print("Data processing and model training completed.")
