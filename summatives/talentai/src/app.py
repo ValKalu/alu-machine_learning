@@ -1,24 +1,19 @@
 from fastapi import FastAPI, UploadFile, File
-from pydantic import BaseModel
-import pandas as pd
-import pickle
+from src.prediction import predict
+from src.model import model_training  # Assuming you have a retraining function in model.py
 
 app = FastAPI()
 
-# Load the model
-model = pickle.load(open('../models/talent_success_model.pkl', 'rb'))
-
-class PredictionRequest(BaseModel):
-    features: list
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to TalentAI"}
 
 @app.post("/predict")
-async def predict(request: PredictionRequest):
-    data = pd.DataFrame([request.features])
-    prediction = model.predict(data)[0]
+async def make_prediction(features: list):
+    prediction = predict(features)
     return {"prediction": prediction}
 
-@app.post("/upload_data/")
-async def upload_data(file: UploadFile = File(...)):
-    data = pd.read_csv(file.file)
-    predictions = model.predict(data)
-    return {"predictions": predictions.tolist()}
+@app.post("/retrain")
+async def retrain_model():
+    model_training()
+    return {"message": "Model retrained successfully"}
