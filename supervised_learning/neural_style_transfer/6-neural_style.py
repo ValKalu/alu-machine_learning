@@ -212,4 +212,3 @@ class NST:
         ))
 
         return content_cost
-    
