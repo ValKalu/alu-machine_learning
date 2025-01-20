@@ -7,7 +7,7 @@ Complete the provided starter code to build, compile, and train a neural network
 
 **Participants:**
 - [Valentine Kalu]
-- [Team Member 1]
+- [Aubin Ntwali]
 
 **Instructions:**
 
