@@ -17,15 +17,14 @@ class RNNCell:
             h (int): Dimensionality of the hidden state
             o (int): Dimensionality of the outputs
         """
-        # Sanity check for types
         if not isinstance(i, int) or not isinstance(h, int) or not isinstance(o, int):
             raise TypeError("i, h, and o must be integers")
 
         # Initialize weights and biases
-        self.Wh = np.random.normal(size=(i + h, h))  # for hidden state
+        self.Wh = np.random.normal(size=(i + h, h))
         self.bh = np.zeros((1, h))
 
-        self.Wy = np.random.normal(size=(h, o))  # for output
+        self.Wy = np.random.normal(size=(h, o))
         self.by = np.zeros((1, o))
 
     def forward(self, h_prev, x_t):
@@ -38,13 +37,10 @@ class RNNCell:
             h_next: next hidden state, shape (m, h)
             y: output of the cell, shape (m, o)
         """
-        # Concatenate previous hidden state and current input
         concat = np.concatenate((h_prev, x_t), axis=1)
 
-        # Compute next hidden state
         h_next = np.tanh(np.matmul(concat, self.Wh) + self.bh)
 
-        # Compute output
         y_linear = np.matmul(h_next, self.Wy) + self.by
         y = self.softmax(y_linear)
 
@@ -59,5 +55,5 @@ class RNNCell:
         Returns:
             Softmax probabilities
         """
-        e_x = np.exp(x - np.max(x, axis=1, keepdims=True))  # numerical stability
+        e_x = np.exp(x - np.max(x, axis=1, keepdims=True))
         return e_x / np.sum(e_x, axis=1, keepdims=True)
