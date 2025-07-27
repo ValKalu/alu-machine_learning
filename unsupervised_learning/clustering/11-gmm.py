@@ -27,4 +27,3 @@ def gmm(X, k):
     clss = Gmm.predict(X)
     return (params.weights_, params.means_,
             params.covariances_, clss, Gmm.bic(X))
-    
