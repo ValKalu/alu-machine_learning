@@ -32,4 +32,3 @@ def initialize(X, k):
     maximum = np.max(X, axis=0)
     centroid = np.random.uniform(minimum, maximum, size=(k, d))
     return centroid
-
