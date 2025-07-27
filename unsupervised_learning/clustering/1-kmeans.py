@@ -73,4 +73,3 @@ def kmeans(X, k, iterations=1000):
             C = new_C
     clss = np.argmin(np.linalg.norm(X[:, None] - C, axis=-1), axis=-1)
     return (C, clss)
-
